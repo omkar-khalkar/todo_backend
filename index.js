@@ -80,6 +80,14 @@ app.delete('/tasks/:id', (req, res) => {
         .catch(err => res.json(err));
 });
 
+app.get('/tasks/filter/:status', (req, res) => {
+    const { status } = req.params;
+    const filter = status === 'all' ? {} : { completed: status === 'complete' };
+    
+    TodoModel.find(filter)
+        .then(result => res.json(result))
+        .catch(err => res.json(err));
+});
 
 
 app.listen(PORT, () => {
